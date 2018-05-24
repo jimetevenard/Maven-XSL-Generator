@@ -30,6 +30,15 @@ public class Main extends AbstractMojo {
 	
 	@Parameter
 	private String scenariXmlFilePath;
+	
+	/**
+	 * 
+	 * By default, the intermediate XSL remains in memory.
+	 * For debug purpose, we could want to store the intermediate XSL
+	 * in a temp dir.
+	 */
+	@Parameter
+	private String intermediateXslDirPath;
 
 
 	@Override
@@ -70,15 +79,41 @@ public class Main extends AbstractMojo {
 			((SaxonXSLTGenerator) generator.getXslGenerator()).getSaxonCompiler()
 					.setParamsContextItem(((SaxonScenariParser) scenariParser).getScenariFileNode());
 
-			// TODO 
+			File intermediateXslDir = intermediateDir();
 			for (GenerationScenario s : scenari) {
-				generator.getXslGenerator().compile(s.getParams(), s.getSourceXslPath(), s.getTargetXslPath());
+				if(intermediateXslDir == null){
+					generator.getXslGenerator().compile(s.getParams(), s.getSourceXslPath(), s.getTargetXslPath());
+				} else {
+					String intermediateFilePath = new File(intermediateXslDir, intermediateFileName()).getAbsolutePath();
+					generator.getXslGenerator().compile(s.getParams(), s.getSourceXslPath(), s.getTargetXslPath(), intermediateFilePath);
+				}
 			}
 		} catch (SaxonApiException | URISyntaxException | GenerationException e) {
 			// TODO Auto-generated catch block
 			throw new MojoExecutionException("Oupsy !", e);
 		}
 
+	}
+	
+	private String intermediateFileName(){
+		return "intermediate-" + System.currentTimeMillis()
+		+ '-' + Math.round(Math.random() * 10000) + ".xsl";
+	}
+	
+	private File intermediateDir(){
+		if(intermediateXslDirPath != null && !(intermediateXslDirPath.isEmpty())){
+			File dir = new File(intermediateXslDirPath);
+			if(dir.isDirectory()){
+				return dir;
+			} else {
+				getLog().error(
+						intermediateXslDirPath
+						+ " is not an existing directory. intermediate XSL won't be saved."
+					);
+			}
+		}
+		
+		return null;
 	}
 
 
