@@ -6,6 +6,38 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
+
+	<description>Maven plugin to run Generate-XSL</description>
+    <url>https://github.com/jimetevenard/Maven-XSL-Generator</url>
+    <developers>
+        <developer>
+            <id>jimetevenard</id>
+            <name>Jim Etevenard</name>
+            <email>jetevenard@oxiane.com</email>
+            <url>http://www.github.com/jimetevenard</url>
+            <organization>OXiane</organization>
+            <organizationUrl>http://www.oxiane.com</organizationUrl>
+            <timezone>Europe/Paris</timezone>
+        </developer>
+    </developers>
+
+    <contributors>
+	
+	</contributors>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:https://github.com/jimetevenard/Maven-XSL-Generator</connection>
+        <developerConnection>scm:git:https://github.com/jimetevenard/Maven-XSL-Generator</developerConnection>
+        <url>scm:git:https://github.com/jimetevenard/Maven-XSL-Generator</url>
+        <tag>HEAD</tag>
+    </scm>
+
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -19,9 +51,7 @@
 				<artifactId>maven-plugin-plugin</artifactId>
 				<version>3.4</version>
 				<configuration>
-					<mojoDependencies>
-						<param>com.jimetevenard.xml:xfe-xsl-generator</param>
-					</mojoDependencies>
+					
 				</configuration>
 			</plugin>
 		</plugins>
@@ -54,4 +84,70 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+	</profiles>
+
 </project>
