@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>com.jimetevenard.xml</groupId>
 			<artifactId>generate-xsl</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<version>0.5.0</version>
 		</dependency>
 		
 
