@@ -9,7 +9,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-import com.jimetevenard.utils.MavenLogger;
 import com.jimetevenard.xslt.Driver;
 import com.jimetevenard.xslt.GenerationException;
 
@@ -42,7 +41,7 @@ public class Main extends AbstractMojo {
 		File catalog = new File(this.project.getBasedir(), "catalog.xml");					
 		File scenariFile = new File(this.project.getBasedir(), scenariXmlFilePath);
 		
-		Driver driver = new Driver(MavenLogger.of(this.getLog()), scenariFile, catalog);
+		Driver driver = new Driver( scenariFile, catalog);
 		
 		driver.setLicencedSaxon(true); // TODO whoooooo !!
 		
