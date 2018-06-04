@@ -34,18 +34,6 @@
 			<version>0.1-SNAPSHOT</version>
 		</dependency>
 		
-		
-		<dependency>
-			<groupId>extern.net.sf.saxon</groupId>
-			<artifactId>saxonee</artifactId>
-			<type>jar</type>
-			<version>9.7.0.13</version>
-		</dependency>
-		<dependency>
-			<groupId>extern.net.sf.saxon</groupId>
-			<artifactId>saxonee-license</artifactId>
-			<version>9.7</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.maven</groupId>
