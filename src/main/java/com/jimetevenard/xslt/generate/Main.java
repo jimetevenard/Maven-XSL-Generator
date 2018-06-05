@@ -21,6 +21,9 @@ public class Main extends AbstractMojo {
 	@Parameter
 	private String scenariXmlFilePath;
 	
+	@Parameter
+	private String licencedSaxon;
+	
 	/**
 	 * 
 	 * By default, the intermediate XSL remains in memory.
@@ -43,7 +46,7 @@ public class Main extends AbstractMojo {
 		
 		Driver driver = new Driver( scenariFile, catalog);
 		
-		driver.setLicencedSaxon(true); // TODO whoooooo !!
+		driver.setLicencedSaxon(Boolean.parseBoolean(licencedSaxon)); 
 		
 		
 		debugDir(driver);
